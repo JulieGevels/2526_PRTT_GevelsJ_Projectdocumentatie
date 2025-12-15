@@ -129,7 +129,6 @@ main {
     margin-bottom: 4px;
 }
 
-/* Afbeeldingen: onder elkaar, gecentreerd, groter */
 .image-grid {
     display: flex;
     flex-direction: column;
@@ -155,7 +154,6 @@ main {
     transform: scale(1.02);
 }
 
-/* Lightbox */
 #lightbox {
     display: none;
     position: fixed;
@@ -189,7 +187,6 @@ main {
     box-shadow: none;      
 }
 
-/* Dropdown menu */
 .lessen-dropdown {
     position: fixed;
     top: 120px;  
@@ -259,7 +256,6 @@ main {
 </head>
 <body>
 
-<!-- Achtergrondbollen -->
 <div class="fixed inset-0 -z-10 overflow-hidden" style="pointer-events: none;">
     <span class="float-dot" style="width:140px;height:140px;top:10%;left:15%;background:radial-gradient(circle at 30% 30%,rgba(250,72,75,0.35),rgba(250,72,75,0.35));"></span>
     <span class="float-dot" style="width:180px;height:180px;top:50%;left:70%;background:radial-gradient(circle at 40% 40%,rgba(228,160,183,0.3),rgba(188,204,238,0.05));animation-delay:3s;"></span>
@@ -292,7 +288,6 @@ main {
             </ul>
         </div>
 
-        <!-- Afbeeldingen: onder elkaar, gecentreerd -->
         <div class="image-grid">
             <img src="Images/8.1.1.png" class="zoomable">
             <img src="Images/8.1.2.png" class="zoomable">
@@ -304,7 +299,6 @@ main {
     </div>
 </main>
 
-<!-- Lightbox -->
 <div id="lightbox">
     <div>
         <button id="closeLightbox">✕</button>
@@ -312,7 +306,6 @@ main {
     </div>
 </div>
 
-<!-- Dropdown menu lessen -->
 <div id="lessen-dropdown" class="lessen-dropdown">
   <button id="lessen-toggle" class="lessen-header">
     <span id="triangle" class="triangle">▾</span>

@@ -130,7 +130,6 @@ main {
     margin-bottom: 4px;
 }
 
-/* ---------- GRID AFBEELDINGEN ---------- */
 .grid-images {
   display: flex;
   flex-direction: column;
@@ -151,7 +150,6 @@ main {
   cursor: zoom-in;
 }
 
-/* ---------- LIGHTBOX ---------- */
 .lightbox {
   position: fixed;
   inset: 0;
@@ -186,7 +184,6 @@ main {
   cursor: pointer;
 }
 
-/* Dropdown menu */
 .lessen-dropdown {
     position: fixed;
     top: 120px;  
@@ -314,7 +311,6 @@ main {
   <p><a class="footer-link" href="https://github.com/JulieGevels/PrototypingTools_LW10_JG" target="_blank">GitHub Repository</a></p>
 </footer>
 
-<!-- LIGHTBOX -->
 <div id="lightbox" class="lightbox">
   <button id="closeLightbox">✕</button>
   <img id="lightboxImage" src="">
@@ -347,7 +343,6 @@ document.addEventListener('keydown', e => {
   if (e.key === 'Escape') closeLightbox();
 });
 
-// Lessen dropdown
 const toggle = document.getElementById('lessen-toggle');
 const list = document.getElementById('lessen-list');
 const triangle = document.getElementById('triangle');

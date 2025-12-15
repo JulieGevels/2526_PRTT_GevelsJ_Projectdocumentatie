@@ -87,7 +87,6 @@ body {
     margin-bottom: 12px;
 }
 
-/* Afbeeldingen onder elkaar, gecentreerd en groter */
 .grid-images {
     display: flex;
     flex-direction: column;
@@ -109,7 +108,6 @@ body {
     cursor: pointer;
 }
 
-/* Lightbox styling */
 #lightbox {
     display: none;
     position: fixed;
@@ -142,7 +140,6 @@ body {
     border: none;          
 }
 
-/* Lessen dropdown */
 .lessen-dropdown {
     position: fixed;
     top: 120px;
@@ -207,7 +204,6 @@ body {
     background: #e0e0e0;
 }
 
-/* Home button */
 .home-button {
     position: fixed;
     bottom: 20px;
@@ -227,7 +223,6 @@ body {
     text-decoration: none; 
 }
 
-/* Footer */
 .footer {
     text-align: center;
     padding: 20px;
@@ -299,7 +294,6 @@ footer {
   <p><strong>Wat veranderde ik?</strong> De lay-out is anders, ik heb geprobeerd het luchtig te houden door de rijtuigen zelf te tekenen.</p> 
   <p><strong>Usability checks:</strong> 4 mensen zeiden dat het duidelijk was.</p>
 
-    <!-- Afbeeldingen -->
     <div class="grid-images">
         <img src="Images/1.1.png" class="zoomable">
         <img src="Images/1.2.2.png" class="zoomable">
@@ -314,13 +308,11 @@ footer {
 
 </main>
 
-<!-- Lightbox -->
 <div id="lightbox">
     <button id="closeLightbox">✕</button>
     <img id="lightboxImage" src="">
 </div>
 
-<!-- Lessen dropdown -->
 <div id="lessen-dropdown" class="lessen-dropdown">
   <button id="lessen-toggle" class="lessen-header">
     <span id="triangle" class="triangle">▾</span>
@@ -371,7 +363,6 @@ document.addEventListener('click', (e) => {
     }
 });
 
-// Lightbox
 const images = document.querySelectorAll('.zoomable');
 const lightbox = document.getElementById('lightbox');
 const lightboxImage = document.getElementById('lightboxImage');
