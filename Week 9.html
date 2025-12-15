@@ -1,0 +1,384 @@
+<!DOCTYPE html>
+<html lang="nl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Figma schermen - Les 8</title>
+<link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500&display=swap" rel="stylesheet">
+<style>
+
+body {
+    margin: 0;
+    font-family: 'Roboto', sans-serif;
+    background-color: #E5D6C5;
+    color: #2B2B2B;
+    overflow-x: hidden;
+    position: relative;
+}
+
+.float-dots-container {
+    position: fixed;
+    inset: 0;
+    z-index: -10;
+    pointer-events: none;
+    overflow: hidden;
+}
+
+.float-dot {
+    position: absolute;
+    border-radius: 50%;
+    filter: blur(8px);
+    opacity: 0.6;
+    animation: floatDots 18s ease-in-out infinite;
+    background: radial-gradient(circle at 30% 30%, rgba(250,72,75,0.35), rgba(250,72,75,0.05));
+}
+
+@keyframes floatDots {
+    0% { transform: translateY(0px) scale(1); opacity: 0.6; }
+    50% { transform: translateY(-25px) scale(1.1); opacity: 0.9; }
+    100% { transform: translateY(0px) scale(1); opacity: 0.6; }
+}
+
+
+header {
+    border-bottom: 2px solid #c65858;
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+    padding: 32px;
+}
+
+header h1 {
+    margin: 0;
+    font-size: 1.5rem;
+    font-weight: 500;
+}
+
+.home-button {
+    position: fixed;
+    bottom: 20px;
+    left: 0;
+    background: #f0f0f0;
+    color: #e2b48c;
+    padding: 8px 16px;
+    border-radius: 8px;
+    text-decoration: none;
+    font-weight: bold;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.08);
+    transition: background 0.2s ease;
+}
+
+.home-button:hover {
+    background: #dddddd;
+}
+
+main {
+    max-width: 1024px;
+    margin: 0 auto;
+    padding: 64px 16px;
+    display: flex;
+    flex-direction: column;
+    gap: 64px;
+}
+
+.log-card {
+    position: relative;      
+    z-index: 1;          
+    background-color: #CBAF96;
+    border-left: 4px solid #592e2e;
+    padding: 24px;
+    box-shadow: 0 10px 25px rgba(0,0,0,0.08);
+    transition: transform 0.3s ease;
+}
+
+.log-card:hover {
+    transform: translateX(-5px);
+}
+
+.les-title {
+    text-transform: uppercase;
+    font-size: 0.9rem;
+    font-weight: 500;
+    letter-spacing: 0.05em;
+    color: #592e2e;
+    margin-bottom: 12px;
+}
+
+.description-title {
+    font-size: 1.25rem;
+    font-weight: 600;
+    margin-bottom: 12px;
+}
+
+.description-text {
+    font-size: 1rem;
+    line-height: 1.6;
+}
+
+.list-section {
+    margin-top: 16px;
+}
+
+.list-section ul {
+    list-style: disc;
+    padding-left: 20px;
+    margin: 4px 0;
+}
+
+.list-section li {
+    margin-bottom: 4px;
+}
+
+/* Afbeeldingen: onder elkaar, gecentreerd, groter */
+.image-grid {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 24px;
+    margin-top: 24px;
+}
+
+.image-grid img {
+    width: 80%;
+    max-width: 900px;
+    height: auto;
+    border: 2px solid #432616;
+    border-radius: 8px;
+    padding: 4px;
+    background: #fff;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.08);
+    cursor: pointer;
+    transition: transform 0.2s ease;
+}
+
+.image-grid img:hover {
+    transform: scale(1.02);
+}
+
+/* Lightbox */
+#lightbox {
+    display: none;
+    position: fixed;
+    inset: 0;
+    background-color: rgba(0,0,0,0.7);
+    align-items: center;
+    justify-content: center;
+    z-index: 50;
+}
+
+#lightbox img {
+    max-width: 90vw;
+    max-height: 90vh;
+    border: 4px solid #fff;
+    border-radius: 8px;
+    box-shadow: 0 8px 20px rgba(0,0,0,0.5);
+}
+
+#closeLightbox {
+    position: absolute;
+    top: 16px;
+    right: 16px;
+    background: #fff;      
+    border-radius: 50%;    
+    padding: 8px;
+    font-size: 18px;
+    font-weight: bold;
+    color: #000;          
+    cursor: pointer;
+    border: none;          
+    box-shadow: none;      
+}
+
+/* Dropdown menu */
+.lessen-dropdown {
+    position: fixed;
+    top: 120px;  
+    right: 12px;
+    width: 220px;
+    z-index: 9999;
+}
+
+.lessen-header {
+    width: 100%;
+    background: #CBAF96;
+    color: #000;
+    padding: 10px 12px;
+    border-radius: 6px;
+    border: none;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-weight: 500;
+    text-align: left;
+}
+
+.triangle {
+    transition: transform 0.2s ease;
+    font-size: 14px;
+}
+
+.triangle.open {
+    transform: rotate(180deg);
+}
+
+.lessen-list {
+    display: none;
+    background: #f5f5f5;
+    border: 1px solid #ddd;
+    margin-top: 8px;
+    border-radius: 6px;
+    overflow: hidden;
+    width: 100%;
+}
+
+.lessen-list ul { list-style: none; margin:0; padding:0; }
+.lessen-list li a { display:block; padding:10px 12px; text-decoration:none; color:#222; border-bottom:1px solid #e6e6e6; }
+.lessen-list li a:last-child { border-bottom:none; }
+.lessen-list li a:hover { background:#e0e0e0; }
+
+.footer {
+    text-align: center;
+    padding: 20px;
+    background-color: #f2f2f2;
+    width: 100%;
+    margin-top: 50px;
+}
+
+.footer-link {
+    color: #c65858;
+    font-weight: 600;
+    text-decoration: none;
+}
+
+.footer-link:hover {
+    text-decoration: underline;
+}
+
+</style>
+</head>
+<body>
+
+<!-- Achtergrondbollen -->
+<div class="fixed inset-0 -z-10 overflow-hidden" style="pointer-events: none;">
+    <span class="float-dot" style="width:140px;height:140px;top:10%;left:15%;background:radial-gradient(circle at 30% 30%,rgba(250,72,75,0.35),rgba(250,72,75,0.35));"></span>
+    <span class="float-dot" style="width:180px;height:180px;top:50%;left:70%;background:radial-gradient(circle at 40% 40%,rgba(228,160,183,0.3),rgba(188,204,238,0.05));animation-delay:3s;"></span>
+    <span class="float-dot" style="width:100px;height:100px;top:75%;left:25%;background:radial-gradient(circle at 30% 30%,rgba(250,72,75,0.35),rgba(250,72,75,0.35));animation-delay:6s;"></span>
+    <span class="float-dot" style="width:120px;height:120px;top:30%;left:80%;background:radial-gradient(circle at 40% 40%,rgba(228,160,183,0.25),rgba(188,204,238,0.05));animation-delay:9s;"></span>
+    <span class="float-dot" style="width:160px;height:160px;top:85%;left:50%;background:radial-gradient(circle at 30% 30%,rgba(250,72,75,0.35),rgba(250,72,75,0.35));animation-delay:12s;"></span>
+</div>
+
+<header>
+    <h1>Project: lost in tra(i)nslation - Julie Gevels - 1GDM1 - Figma schermen</h1>
+</header>
+
+<main>
+    <a href="index.html" class="home-button">⬅ Terug naar homepage</a>
+
+    <div class="log-card">
+        <div class="les-title">les 8</div>
+        <div class="description-title">
+            In deze fase van het proces heb ik aan mijn Visual Code verder gewerkt door mijn CSS om te zetten naar Tailwind en heb ik verder gewerkt aan mijn Figma schermen.
+        </div>
+        <div class="description-text">
+            Ik heb de drie kernschermen (vertrekbord, perronscherm, wagonindelingsscherm) omgezet in persoonlijk mobiele schermen. Daarnaast heb ik deze mobiele schermen interactief gemaakt. Dit resulteerde in een compactere en toegankelijkere interface voor de individuele reiziger. Door enkel de noodzakelijke informatie te tonen, ontstaat er een gebruiksvriendelijk en informatief bord.
+        </div>
+
+        <div class="list-section">
+            <div class="font-semibold">UX/UI-vragen:</div>
+            <ul>
+              <li>Welke informatie is cruciaal voor de mobiele versie en welke informatie kan ik weglaten, zodat de schermen niet overweldigend worden?</li>
+              <li>Hoe kan ik de overgang tussen de 3 schermen zo vloeiend maken dat de gebruikers de structuur begrijpen?</li>
+            </ul>
+        </div>
+
+        <!-- Afbeeldingen: onder elkaar, gecentreerd -->
+        <div class="image-grid">
+            <img src="Images/8.1.1.png" class="zoomable">
+            <img src="Images/8.1.2.png" class="zoomable">
+            <img src="Images/8.1.3.png" class="zoomable">
+            <img src="Images/8.2.png" class="zoomable">
+            <img src="Images/8.3.1.png" class="zoomable">
+            <img src="Images/8.3.2.png" class="zoomable">
+        </div>
+    </div>
+</main>
+
+<!-- Lightbox -->
+<div id="lightbox">
+    <div>
+        <button id="closeLightbox">✕</button>
+        <img id="lightboxImage" src="">
+    </div>
+</div>
+
+<!-- Dropdown menu lessen -->
+<div id="lessen-dropdown" class="lessen-dropdown">
+  <button id="lessen-toggle" class="lessen-header">
+    <span id="triangle" class="triangle">▾</span>
+    <span class="title">Lessen</span>
+  </button>
+  <nav id="lessen-list" class="lessen-list">
+    <ul>
+      <li><a href="Week 1 & 2.html">Les 1 & 2</a></li>
+      <li><a href="Week 3.html">Les 3</a></li>
+      <li><a href="Week 4.html">Les 4</a></li>
+      <li><a href="Week 5.html">Les 5</a></li>
+      <li><a href="Week 6.html">Les 6</a></li>
+      <li><a href="Week 7 & 8.html">Les 7</a></li>
+      <li><a href="Week 9.html">Les 8</a></li>
+      <li><a href="Week 10.html">Les 9</a></li>
+      <li><a href="Week 11.html">Les 10</a></li>
+      <li><a href="Week 12.html">Les 11</a></li>
+    </ul>
+  </nav>
+</div>
+
+<footer class="footer">
+  <p>AP Hogeschool: Grafische en Digitale Media</p>
+  <p>
+    <a class="footer-link" href="https://github.com/JulieGevels/PrototypingTools_LW10_JG" target="_blank">
+      GitHub Repository
+    </a>
+  </p>
+</footer>
+
+<script>
+const images = document.querySelectorAll('.zoomable');
+const lightbox = document.getElementById('lightbox');
+const lightboxImage = document.getElementById('lightboxImage');
+const closeBtn = document.getElementById('closeLightbox');
+
+images.forEach(img => {
+    img.addEventListener('click', () => {
+        lightboxImage.src = img.src;
+        lightbox.style.display = 'flex';
+        lightbox.style.alignItems = 'center';
+        lightbox.style.justifyContent = 'center';
+    });
+});
+
+closeBtn.addEventListener('click', () => { lightbox.style.display = 'none'; });
+lightbox.addEventListener('click', e => { if(e.target === lightbox) lightbox.style.display = 'none'; });
+
+const toggle = document.getElementById('lessen-toggle');
+const list = document.getElementById('lessen-list');
+const triangle = document.getElementById('triangle');
+
+toggle.addEventListener('click', () => {
+    const open = list.style.display === 'block';
+    list.style.display = open ? 'none' : 'block';
+    triangle.classList.toggle('open', !open);
+});
+
+document.addEventListener('click', e => {
+    const dropdown = document.getElementById('lessen-dropdown');
+    if(!dropdown.contains(e.target)){
+        list.style.display = 'none';
+        triangle.classList.remove('open');
+    }
+});
+</script>
+
+</body>
+</html>

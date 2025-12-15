@@ -1,0 +1,392 @@
+<!DOCTYPE html>
+<html lang="nl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Logboek met bolletjes</title>
+
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600&family=Roboto:wght@400;500&display=swap" rel="stylesheet">
+
+<style>
+body {
+    margin: 0;
+    padding: 0;
+    font-family: 'Inter', sans-serif;
+    background-color: #E5D6C5;
+    color: #2B2B2B;
+    overflow-x: hidden;
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+}
+
+.floating-dots {
+    position: fixed;
+    inset: 0;
+    z-index: -10;
+    overflow: hidden;
+}
+
+.floating-dots span {
+    position: absolute;
+    display: block;
+    border-radius: 50%;
+    filter: blur(8px);
+    animation: floatDots 18s ease-in-out infinite;
+}
+
+.floating-dots .dot1 { width:140px; height:140px; background: rgba(250,72,75,0.35); top:10%; left:15%; }
+.floating-dots .dot2 { width:180px; height:180px; background: rgba(228,160,183,0.3); top:50%; left:70%; animation-delay:3s; }
+.floating-dots .dot3 { width:100px; height:100px; background: rgba(250,72,75,0.35); top:75%; left:25%; animation-delay:6s; }
+.floating-dots .dot4 { width:120px; height:120px; background: rgba(228,160,183,0.25); top:30%; left:80%; animation-delay:9s; }
+.floating-dots .dot5 { width:160px; height:160px; background: rgba(250,72,75,0.35); top:85%; left:50%; animation-delay:12s; }
+
+@keyframes floatDots {
+    0% { transform: translateY(0px) scale(1); opacity: 0.6; }
+    50% { transform: translateY(-25px) scale(1.1); opacity: 0.9; }
+    100% { transform: translateY(0px) scale(1); opacity: 0.6; }
+}
+
+.page-header {
+    border-bottom: 2px solid #c65858;
+    padding: 32px 64px;
+    text-align: right;
+}
+
+.page-header h1 {
+    font-size: 1.8rem;
+    font-weight: 600;
+    margin: 0;
+}
+
+.page-content {
+    max-width: 1100px;
+    margin: 60px auto;
+    padding: 0 10%;
+}
+
+.log-card {
+    background-color: #CBAF96;
+    border-left: 4px solid #592e2e;
+    padding: 32px;
+    margin-bottom: 48px;
+    box-shadow: 0 10px 25px rgba(0,0,0,0.08);
+    transition: transform 0.3s ease;
+}
+
+.log-card:hover {
+    transform: translateX(-5px);
+}
+
+.log-label {
+    text-transform: uppercase;
+    font-size: 0.75rem;
+    font-weight: 500;
+    letter-spacing: 0.1em;
+    color: #592e2e;
+    margin-bottom: 12px;
+}
+
+/* Afbeeldingen onder elkaar, gecentreerd en groter */
+.grid-images {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 1.5rem;
+    margin-top: 1rem;
+}
+
+.grid-images img {
+    width: 80%;
+    max-width: 600px;
+    height: auto;
+    object-fit: cover;
+    border: 2px solid #432616;
+    border-radius: 0.5rem;
+    padding: 0.25rem;
+    background: #fff;
+    box-shadow: 0 2px 6px rgba(0,0,0,0.2);
+    cursor: pointer;
+}
+
+/* Lightbox styling */
+#lightbox {
+    display: none;
+    position: fixed;
+    inset: 0;
+    background-color: rgba(0,0,0,0.7);
+    align-items: center;
+    justify-content: center;
+    z-index: 50;
+}
+
+#lightbox img {
+    max-width: 90vw;
+    max-height: 90vh;
+    border: 4px solid #fff;
+    border-radius: 0.5rem;
+    box-shadow: 0 8px 20px rgba(0,0,0,0.5);
+}
+
+#closeLightbox {
+    position: absolute;
+    top: 16px;
+    right: 16px;
+    background: #fff;      
+    border-radius: 50%;    
+    padding: 8px;
+    font-size: 18px;
+    font-weight: bold;
+    color: #000;          
+    cursor: pointer;
+    border: none;          
+}
+
+/* Lessen dropdown */
+.lessen-dropdown {
+    position: fixed;
+    top: 120px;
+    right: 12px;
+    width: 220px;
+    z-index: 999;
+}
+
+.lessen-header {
+    width: 100%;
+    background: #CBAF96;
+    color: #000;
+    padding: 10px 12px;
+    border-radius: 6px;
+    border: none;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-weight: 500;
+    text-align: left;
+}
+
+.triangle {
+    transition: transform 0.2s ease;
+    font-size: 14px;
+}
+
+.triangle.open {
+    transform: rotate(180deg);
+}
+
+.lessen-list {
+    display: none;
+    background: #f5f5f5;
+    border: 1px solid #ddd;
+    margin-top: 8px;
+    border-radius: 6px;
+    overflow: hidden;
+    width: 100%;
+}
+
+.lessen-list ul {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+}
+
+.lessen-list li a {
+    display: block;
+    padding: 10px 12px;
+    text-decoration: none;
+    color: #222;
+    border-bottom: 1px solid #e6e6e6;
+}
+
+.lessen-list li a:last-child {
+    border-bottom: none;
+}
+
+.lessen-list li a:hover {
+    background: #e0e0e0;
+}
+
+/* Home button */
+.home-button {
+    position: fixed;
+    bottom: 20px;
+    left: 0;
+    background: #f0f0f0;
+    color: #e2b48c;
+    padding: 8px 16px;
+    border-radius: 8px;
+    text-decoration: none;
+    font-weight: bolder;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.08);
+    transition: background 0.2s ease;
+}
+
+.home-button:hover {
+    background: #dddddd;
+    text-decoration: none; 
+}
+
+/* Footer */
+.footer {
+    text-align: center;
+    padding: 20px;
+    background-color: #f2f2f2;
+    width: 100%;
+    margin-top: 50px;
+}
+
+.footer-link {
+    color: #c65858; 
+    font-weight: 600;
+    text-decoration: none;
+}
+
+.footer-link:hover {
+    text-decoration: underline;
+}
+
+body, html {
+    height: 100%;
+}
+
+body {
+    display: flex;
+    flex-direction: column;
+}
+
+footer {
+    margin-top: auto;
+}
+</style>
+</head>
+<body>
+
+<div class="floating-dots">
+  <span class="dot dot1"></span>
+  <span class="dot dot2"></span>
+  <span class="dot dot3"></span>
+  <span class="dot dot4"></span>
+  <span class="dot dot5"></span>
+</div>
+
+<header class="page-header">
+  <h1>Project: lost in tra(i)nslation - Julie Gevels - 1GDM1 - Low-fi prototypes</h1>
+</header>
+
+<main class="page-content">
+<div class="log-card"> 
+  <div class="log-label"><strong>Brainstormen</strong></div> 
+  <p><strong>Ik maakte een mindmap om verschillende richtingen te verkennen en verbanden te leggen om zo betere keuzes te maken.</strong></p> 
+  <p><strong>UX/UI-vragen:</strong> Hoeveel details zijn nuttig zonder te overladen?</p> 
+</div> 
+<div class="log-card"> 
+  <div class="log-label"><strong>Ingangschermen</strong></div> 
+  <p><strong>Ik maakte deze ingangsschermen via Figma.</strong></p> 
+  <p><strong>UX/UI-vragen:</strong> Past het kleurenpalet bij de huisstijl?</p> 
+  <p><strong>Wat veranderde ik?</strong> De lay-out is anders en ik heb gebruik gemaakt van kleurcodes. Groen = trein komt eraan, geel = bijna, rood = geannuleerd. Ook toegevoegd: “Nog … min”.</p> 
+  <p><strong>Usability checks:</strong> 2 mensen bevestigden dat de kleurcodes duidelijk waren.</p> 
+</div> 
+<div class="log-card"> 
+  <div class="log-label"><strong>Perronschermen</strong></div> 
+  <p><strong>Ik maakte deze perronschermen via Figma.</strong></p>
+  <p>Ik heb de eerste versie van mijn low-fi perronschermen genomen en de kleur grijs aangepast naar blauw. Structuur en lay-out bleven hetzelfde.</p> 
+</div> 
+<div class="log-card"> 
+  <div class="log-label"><strong>Wagonschermen</strong></div> 
+  <p><strong>Ik maakte deze wagonschermen via Marvel.</strong></p> 
+  <p><strong>UX/UI-vragen:</strong> Hoe breng ik deze informatie zo duidelijk mogelijk over?</p> 
+  <p><strong>Wat veranderde ik?</strong> De lay-out is anders, ik heb geprobeerd het luchtig te houden door de rijtuigen zelf te tekenen.</p> 
+  <p><strong>Usability checks:</strong> 4 mensen zeiden dat het duidelijk was.</p>
+
+    <!-- Afbeeldingen -->
+    <div class="grid-images">
+        <img src="Images/1.1.png" class="zoomable">
+        <img src="Images/1.2.2.png" class="zoomable">
+        <img src="Images/1.3.png" class="zoomable">
+        <img src="Images/1.4.png" class="zoomable">
+        <img src="Images/1.5.png" class="zoomable">
+        <img src="Images/1.6.png" class="zoomable">
+    </div>
+  </div>
+
+  <a href="index.html" class="home-button">⬅ Terug naar homepage</a>
+
+</main>
+
+<!-- Lightbox -->
+<div id="lightbox">
+    <button id="closeLightbox">✕</button>
+    <img id="lightboxImage" src="">
+</div>
+
+<!-- Lessen dropdown -->
+<div id="lessen-dropdown" class="lessen-dropdown">
+  <button id="lessen-toggle" class="lessen-header">
+    <span id="triangle" class="triangle">▾</span>
+    <span class="title">Lessen</span>
+  </button>
+
+  <nav id="lessen-list" class="lessen-list">
+    <ul>
+      <li><a href="Week 1 & 2.html">Les 1 & 2</a></li>
+      <li><a href="Week 3.html">Les 3</a></li>
+      <li><a href="Week 4.html">Les 4</a></li>
+      <li><a href="Week 5.html">Les 5</a></li>
+      <li><a href="Week 6.html">Les 6</a></li>
+      <li><a href="Week 7 & 8.html">Les 7</a></li>
+      <li><a href="Week 9.html">Les 8</a></li>
+      <li><a href="Week 10.html">Les 9</a></li>
+      <li><a href="Week 11.html">Les 10</a></li>
+      <li><a href="Week 12.html">Les 11</a></li>
+    </ul>
+  </nav>
+</div>
+
+<footer class="footer">
+  <p>AP Hogeschool: Grafische en Digitale Media</p>
+  <p>
+    <a class="footer-link" href="https://github.com/JulieGevels/PrototypingTools_LW10_JG" target="_blank">
+      GitHub Repository
+    </a>
+  </p>
+</footer>
+
+<script>
+const toggle = document.getElementById('lessen-toggle');
+const list = document.getElementById('lessen-list');
+const triangle = document.getElementById('triangle');
+
+toggle.addEventListener('click', () => {
+    const open = list.style.display === 'block';
+    list.style.display = open ? 'none' : 'block';
+    triangle.classList.toggle('open', !open);
+});
+
+document.addEventListener('click', (e) => {
+    const dropdown = document.getElementById('lessen-dropdown');
+    if (!dropdown.contains(e.target)) {
+      list.style.display = 'none';
+      triangle.classList.remove('open');
+    }
+});
+
+// Lightbox
+const images = document.querySelectorAll('.zoomable');
+const lightbox = document.getElementById('lightbox');
+const lightboxImage = document.getElementById('lightboxImage');
+const closeBtn = document.getElementById('closeLightbox');
+
+images.forEach(img => {
+    img.addEventListener('click', () => {
+        lightboxImage.src = img.src;
+        lightbox.style.display = 'flex';
+    });
+});
+
+closeBtn.addEventListener('click', () => { lightbox.style.display = 'none'; });
+lightbox.addEventListener('click', e => { if(e.target === lightbox) lightbox.style.display = 'none'; });
+</script>
+
+</body>
+</html>

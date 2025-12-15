@@ -1,0 +1,400 @@
+<!DOCTYPE html>
+<html lang="nl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>HTML files & CSS</title>
+
+<link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500&display=swap" rel="stylesheet">
+
+<style>
+body {
+    margin: 0;
+    padding: 0;
+    font-family: 'Roboto', sans-serif;
+    background-color: #E5D6C5;
+    color: #2B2B2B;
+    overflow-x: hidden;
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+}
+.page-header {
+    border-bottom: 2px solid #c65858;
+    padding: 32px;
+    text-align: right;
+    position: relative;
+    z-index: 1;
+}
+
+.page-header h1 {
+    font-size: 1.5rem;
+    font-weight: 500;
+    margin: 0;
+}
+
+.home-button {
+    position: fixed;
+    bottom: 20px;
+    left: 0;
+    background: #f0f0f0;
+    color: #e2b48c;
+    padding: 8px 16px;
+    border-radius: 8px;
+    text-decoration: none;
+    font-weight: bold;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.08);
+    transition: background 0.2s ease;
+    z-index: 1;
+}
+
+.home-button:hover {
+    background: #dddddd;
+}
+
+.page-content {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 64px 24px;
+    flex: 1;
+    position: relative;
+    z-index: 1;
+}
+
+.log-card {
+    background-color: #CBAF96;
+    border-left: 4px solid #592e2e;
+    padding: 32px;
+    margin-bottom: 40px;
+    box-shadow: 0 10px 25px rgba(0,0,0,0.08);
+    transition: transform 0.3s ease;
+}
+
+.log-card:hover {
+    transform: translateX(-5px);
+}
+
+.log-card .les-title {
+    text-transform: uppercase;
+    font-size: 0.9rem;
+    font-weight: 500;
+    letter-spacing: 0.05em;
+    color: #592e2e;
+    margin-bottom: 12px;
+}
+
+.log-card .description,
+.log-card ul {
+    font-weight: bold;
+    font-size: 1rem;
+    line-height: 1.6;
+}
+
+.schermen-grid {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 16px;
+    margin-top: 16px;
+}
+
+@media screen and (min-width: 768px) {
+    .schermen-grid {
+        grid-template-columns: repeat(3, 1fr);
+    }
+}
+
+.schermen-grid img {
+    width: 100%;
+    border: 2px solid #432616;
+    border-radius: 8px;
+    padding: 4px;
+    background-color: white;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.08);
+    cursor: pointer;
+}
+
+.schermen-grid img:nth-child(1),
+.schermen-grid img:nth-child(2) {
+    height: 800px;
+    object-fit: cover;
+}
+
+.schermen-grid img:nth-child(n+3) {
+    height: 800px;
+    object-fit: cover;
+}
+.schermen-grid {
+    display: flex;
+    flex-direction: column;
+    align-items: center; /* centreert de afbeeldingen horizontaal */
+    gap: 20px;           /* ruimte tussen afbeeldingen */
+    margin-top: 16px;
+}
+
+.schermen-grid img {
+    width: 80%;          /* breedte van de afbeelding */
+    max-width: 600px;    /* maximale breedte */
+    height: auto;        /* hoogte automatisch behouden */
+    border: 2px solid #432616;
+    border-radius: 8px;
+    padding: 4px;
+    background-color: white;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.08);
+    cursor: pointer;
+    object-fit: cover;
+}
+
+
+#lightbox {
+    display: none;
+    position: fixed;
+    inset: 0;
+    background: rgba(0,0,0,0.7);
+    justify-content: center;
+    align-items: center;
+    z-index: 50;
+}
+
+#lightbox img {
+    max-width: 90vw;
+    max-height: 90vh;
+    border: 4px solid white;
+    border-radius: 8px;
+    box-shadow: 0 10px 25px rgba(0,0,0,0.3);
+}
+
+#closeLightbox {
+    position: absolute;
+    top: 16px;
+    right: 16px;
+    background: white;
+    color: black;
+    border: none;
+    border-radius: 50%;
+    padding: 8px 12px;
+    font-size: 1.2rem;
+    cursor: pointer;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.3);
+}
+
+.lessen-dropdown {
+    position: fixed;
+    top: 120px;
+    right: 12px;
+    width: 220px;
+    z-index: 999;
+}
+
+.lessen-header {
+    width: 100%;
+    background: #CBAF96;
+    color: #000;
+    padding: 10px 12px;
+    border-radius: 6px;
+    border: none;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-weight: 500;
+    text-align: left;
+}
+
+.triangle {
+    transition: transform 0.2s ease;
+    font-size: 14px;
+}
+
+.triangle.open {
+    transform: rotate(180deg);
+}
+
+.lessen-list {
+    display: none;
+    background: #f5f5f5;
+    border: 1px solid #ddd;
+    margin-top: 8px;
+    border-radius: 6px;
+    overflow: hidden;
+    width: 100%;
+}
+
+.lessen-list ul {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+}
+
+.lessen-list li a {
+    display: block;
+    padding: 10px 12px;
+    text-decoration: none;
+    color: #222;
+    border-bottom: 1px solid #e6e6e6;
+}
+
+.lessen-list li a:last-child {
+    border-bottom: none;
+}
+
+.lessen-list li a:hover {
+    background: #e0e0e0;
+}
+
+.footer {
+    text-align: center;
+    padding: 20px;
+    background-color: #f2f2f2;
+    width: 100%;
+    margin-top: auto;
+    position: relative;
+    z-index: 1;
+}
+
+.footer-link {
+    color: #c65858;
+    font-weight: 600;
+    text-decoration: none;
+}
+
+.footer-link:hover {
+    text-decoration: underline;
+}
+
+.background-dots {
+    position: fixed;
+    inset: 0;
+    z-index: -10;
+    pointer-events: none;
+    overflow: hidden;
+}
+
+.background-dots span {
+    position: absolute;
+    border-radius: 50%;
+    filter: blur(8px);
+    animation: floatDots 18s ease-in-out infinite;
+    background: radial-gradient(circle at 30% 30%, rgba(250,72,75,0.35), rgba(250,72,75,0.05));
+}
+
+@keyframes floatDots {
+    0% { transform: translateY(0px) scale(1); opacity: 0.6; }
+    50% { transform: translateY(-25px) scale(1.1); opacity: 0.9; }
+    100% { transform: translateY(0px) scale(1); opacity: 0.6; }
+}
+</style>
+</head>
+<body>
+
+<div class="background-dots" id="backgroundDots"></div>
+
+<header class="page-header">
+    <h1>Project: lost in tra(i)nslation - Julie Gevels - 1GDM1 - HTML files & CSS</h1>
+</header>
+
+<main class="page-content">
+    <div class="log-card">
+        <div class="les-title">Les 4</div>
+        <div class="description"><strong>Ik heb geëxperimenteerd met de Netlify-app en ChatGPT om HTML en CSS files te maken van mijn schermen. Hieronder vind je afbeeldingen van de resultaten.</strong></div>
+
+        <div class="schermen-grid">
+            <img src="Images/1.png" alt="1" class="zoomable">
+            <img src="Images/2.png" alt="2" class="zoomable">
+            <img src="Images/3.png" alt="3" class="zoomable">
+            <img src="Images/4.png" alt="4" class="zoomable">
+            <img src="Images/5.png" alt="5" class="zoomable">
+            <img src="Images/6.png" alt="6" class="zoomable">
+        </div>
+    </div>
+</main>
+
+<div id="lightbox">
+    <button id="closeLightbox">✕</button>
+    <img id="lightboxImage" src="">
+</div>
+
+<div id="lessen-dropdown" class="lessen-dropdown">
+  <button id="lessen-toggle" class="lessen-header">
+    <span id="triangle" class="triangle">▾</span>
+    <span class="title">Lessen</span>
+  </button>
+  <nav id="lessen-list" class="lessen-list">
+    <ul>
+      <li><a href="Week 1 & 2.html">Les 1 & 2</a></li>
+      <li><a href="Week 3.html">Les 3</a></li>
+      <li><a href="Week 4.html">Les 4</a></li>
+      <li><a href="Week 5.html">Les 5</a></li>
+      <li><a href="Week 6.html">Les 6</a></li>
+      <li><a href="Week 7 & 8.html">Les 7</a></li>
+      <li><a href="Week 9.html">Les 8</a></li>
+      <li><a href="Week 10.html">Les 9</a></li>
+      <li><a href="Week 11.html">Les 10</a></li>
+      <li><a href="Week 12.html">Les 11</a></li>
+    </ul>
+  </nav>
+</div>
+
+<footer class="footer">
+  <p>AP Hogeschool: Grafische en Digitale Media</p>
+  <p>
+    <a class="footer-link" href="https://github.com/JulieGevels/PrototypingTools_LW10_JG" target="_blank">
+      GitHub Repository
+    </a>
+  </p>
+</footer>
+
+<script>
+  const images = document.querySelectorAll('.zoomable');
+  const lightbox = document.getElementById('lightbox');
+  const lightboxImage = document.getElementById('lightboxImage');
+  const closeBtn = document.getElementById('closeLightbox');
+
+  images.forEach(img => {
+    img.addEventListener('click', () => {
+      lightboxImage.src = img.src;
+      lightbox.style.display = 'flex';
+    });
+  });
+
+  closeBtn.addEventListener('click', () => {
+    lightbox.style.display = 'none';
+  });
+
+  lightbox.addEventListener('click', (e) => {
+    if(e.target === lightbox){
+        lightbox.style.display = 'none';
+    }
+  });
+  const toggle = document.getElementById('lessen-toggle');
+  const list = document.getElementById('lessen-list');
+  const triangle = document.getElementById('triangle');
+
+  toggle.addEventListener('click', () => {
+    const open = list.style.display === 'block';
+    list.style.display = open ? 'none' : 'block';
+    triangle.classList.toggle('open', !open);
+  });
+
+  document.addEventListener('click', (e) => {
+    const dropdown = document.getElementById('lessen-dropdown');
+    if (!dropdown.contains(e.target)) {
+      list.style.display = 'none';
+      triangle.classList.remove('open');
+    }
+  });
+
+  const container = document.getElementById('backgroundDots');
+  for (let i = 0; i < 12; i++) {
+      const dot = document.createElement('span');
+      dot.style.width = `${Math.random()*120 + 40}px`;
+      dot.style.height = `${Math.random()*120 + 40}px`;
+      dot.style.top = `${Math.random()*100}%`;
+      dot.style.left = `${Math.random()*100}%`;
+      dot.style.animationDelay = `${Math.random()*20}s`;
+      dot.style.background = `radial-gradient(circle at 30% 30%, rgba(250,72,75,${Math.random()*0.4 + 0.2}), rgba(250,72,75,0.05))`;
+      container.appendChild(dot);
+  }
+</script>
+<a href="index.html" class="home-button">⬅ Terug naar homepage</a>
+</body>
+</html>
