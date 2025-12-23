@@ -5,10 +5,10 @@
 :root{
   --bg: #E5D6C5;
   --panel: #FFF9F4;
-  --accent: rgb(156, 65, 65);
+  --accent: rgb(163, 72, 72);
   --accent-dark: #592e2e;
   --beige: #CBAF96;
-  --beige-dark: #B08970;
+  --beige-dark: #dab7a0;
   --text: #2B2B2B;
   --muted: #929292;
   --soft-shadow: 0 10px 25px rgba(0,0,0,0.08);
@@ -79,7 +79,7 @@ body {
 }
 
 .carousel { margin-top: 2rem; display:flex; flex-direction:column; align-items:center; }
-.carousel-inner { position: relative; width:100%; display:flex; justify-content:center; align-items:center; }
+.carousel-inner { position: relative; width:200%; display:flex; justify-content:center; align-items:center; }
 
 .carousel-arrow{
   position:absolute;
@@ -93,7 +93,7 @@ body {
   cursor:pointer; box-shadow: var(--soft-shadow);
   transition: transform .18s ease, background .18s ease;
 }
-.carousel-arrow:hover{ transform: translateY(-50%) scale(1.06); background: var(--beige-dark); }
+.carousel-arrow:hover{ transform: translateY(-50%) scale(1.08); background: var(--beige-dark); }
 .carousel-arrow-left { left: -20px; }
 .carousel-arrow-right { right: -20px; }
 
@@ -109,12 +109,12 @@ body {
 }
 .week-card:hover{ transform: scale(1.05); background: var(--beige-dark); color: #fff; }
 .week-card .week-title{ font-size:2rem; font-weight:700; }
-.week-card .week-subtitle{ color: #5a3b2e; margin-top:8px; }
+.week-card .week-subtitle{ color: #ffffff; margin-top:8px; }
 
 .content-block{
   border-left: 4px solid var(--accent-dark);
-  background: var(--beige);
-  padding: 24px 30px;
+  background: #E5D6C5;
+  padding: 20px 26px;
   margin-bottom: 40px;
   box-shadow: var(--soft-shadow);
   transition: transform .2s ease;
@@ -175,7 +175,7 @@ footer{ text-align:center; padding:25px; background:#f2f2f2; color:#333; }
 
 @media (max-width: 900px){
   .page-wrapper{ padding: 30px; margin: 2rem 1rem; border-radius:16px; }
-  .header{ padding: 20px; justify-content:flex-start; }
+  .header{ padding: 30px; justify-content:flex-start; }
   .header-title{ font-size:1.1rem; }
   .week-card{ width: 80%; padding: 28px; }
   .carousel-arrow-left { left: 6px; }
@@ -185,7 +185,7 @@ footer{ text-align:center; padding:25px; background:#f2f2f2; color:#333; }
 
 @media (max-width: 480px){
   .page-wrapper{ padding: 20px; }
-  .header-title{ font-size:1rem; }
+  .header-title{ font-size:2rem; }
   .week-card{ width: 100%; padding: 20px; }
   .vertical-buttons li a{ font-size:0.95rem; }
   .floating-sphere{ display:none; } 
@@ -195,3 +195,29 @@ button, .btn, .contact-toggle { font-family: 'Montserrat', sans-serif; }
 
 a { color: var(--accent); text-decoration: none; font-weight:500; }
 a:hover { color: var(--beige-dark); text-decoration: underline; }
+@keyframes flashyFloat {
+  0% {
+    transform: translate(0,0) scale(1) rotate(0deg);
+    box-shadow: 0 0 20px rgba(255,120,120,0.4);
+  }
+
+  25% {
+    transform: translate(40px,-30px) scale(1.2) rotate(15deg);
+    box-shadow: 0 0 50px rgba(255,90,90,0.8);
+  }
+
+  50% {
+    transform: translate(-30px,20px) scale(0.9) rotate(-15deg);
+    box-shadow: 0 0 70px rgba(255,100,100,1);
+  }
+
+  75% {
+    transform: translate(30px,-20px) scale(1.15) rotate(10deg);
+    box-shadow: 0 0 50px rgba(255,120,120,0.7);
+  }
+
+  100% {
+    transform: translate(0,0) scale(1) rotate(0deg);
+    box-shadow: 0 0 20px rgba(255,120,120,0.4);
+  }
+}

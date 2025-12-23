@@ -1,0 +1,338 @@
+<!DOCTYPE html>
+<html lang="nl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Afwerking - Les 11</title>
+
+<link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500&display=swap" rel="stylesheet">
+
+<style>
+
+body {
+    font-family: 'Roboto', sans-serif;
+    margin: 0;
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+    background-color: #E5D6C5;
+    color: #2B2B2B;
+    overflow-x: hidden;
+}
+
+header {
+    border-bottom: 2px solid #c65858;
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+    padding: 2rem;
+    font-weight: 500;
+    font-size: 1.5rem;
+}
+
+main {
+    max-width: 1000px;
+    margin: 0 auto;
+    padding: 4rem 1rem;
+    flex: 1;
+}
+
+a.back-home {
+    position: fixed;
+    bottom: 1rem;
+    left: 1rem;
+    background-color: #f5f5f5;
+    color: #e2b48c;
+    padding: 0.5rem 1rem;
+    border-radius: 0.5rem;
+    font-size: 1rem;
+    font-weight: 500;
+    text-decoration: none;
+    box-shadow: 0 2px 6px rgba(0,0,0,0.2);
+    transition: background 0.2s;
+}
+a.back-home:hover {
+    background-color: #e0e0e0;
+}
+
+.content-box {
+    border-left: 4px solid #592e2e;
+    background-color: #CBAF96;
+    padding: 1.5rem;
+    box-shadow: 0 2px 6px rgba(0,0,0,0.2);
+    transition: transform 0.2s;
+}
+.content-box:hover {
+    transform: translateX(-0.25rem);
+}
+
+.content-box .lesson-number {
+    text-transform: uppercase;
+    font-weight: 500;
+    color: #592e2e;
+    font-size: 0.875rem;
+    letter-spacing: 0.05em;
+}
+
+.content-box .lesson-title {
+    font-weight: 600;
+    font-size: 1.25rem;
+}
+
+.content-box .lesson-text {
+    font-size: 1rem;
+    margin-top: 0.5rem;
+}
+
+.content-box ul {
+    list-style: disc inside;
+    margin: 0.5rem 0 0 0;
+    padding: 0;
+}
+
+.grid-images {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+    gap: 1rem;
+    margin-top: 1rem;
+}
+
+.grid-images img {
+    width: 100%;
+    object-fit: cover;
+    border: 2px solid #432616;
+    border-radius: 0.5rem;
+    padding: 0.25rem;
+    background: #fff;
+    box-shadow: 0 2px 6px rgba(0,0,0,0.2);
+    cursor: pointer;
+}
+
+.grid-images img.large {
+    height: 300px;
+}
+
+.grid-images img.normal {
+    height: 220px;
+}
+
+@keyframes floatDots {
+    0% { transform: translateY(0px) scale(1); opacity: 0.6; }
+    50% { transform: translateY(-25px) scale(1.1); opacity: 0.9; }
+    100% { transform: translateY(0px) scale(1); opacity: 0.6; }
+}
+
+.background-dots {
+    position: fixed;
+    inset: 0;
+    overflow: hidden;
+    z-index: -10;
+}
+
+.background-dots span {
+    position: absolute;
+    border-radius: 50%;
+    filter: blur(10px);
+    animation: floatDots 18s ease-in-out infinite;
+    pointer-events: none;
+}
+
+.dot1 { width: 140px; height: 140px; top: 10%; left: 15%; background: radial-gradient(circle at 30% 30%, rgba(250,72,75,0.35), rgba(250,72,75,0.35)); }
+.dot2 { width: 180px; height: 180px; top: 50%; left: 70%; background: radial-gradient(circle at 40% 40%, rgba(228,160,183,0.3), rgba(188,204,238,0.05)); animation-delay: 3s; }
+.dot3 { width: 100px; height: 100px; top: 75%; left: 25%; background: radial-gradient(circle at 30% 30%, rgba(250,72,75,0.35), rgba(250,72,75,0.35)); animation-delay: 6s; }
+.dot4 { width: 120px; height: 120px; top: 30%; left: 80%; background: radial-gradient(circle at 40% 40%, rgba(228,160,183,0.25), rgba(188,204,238,0.05)); animation-delay: 9s; }
+.dot5 { width: 160px; height: 160px; top: 85%; left: 50%; background: radial-gradient(circle at 30% 30%, rgba(250,72,75,0.35), rgba(250,72,75,0.35)); animation-delay: 12s; }
+
+#lightbox {
+    position: fixed;
+    inset: 0;
+    background: rgba(0,0,0,0.7);
+    display: none;
+    align-items: center;
+    justify-content: center;
+    z-index: 50;
+}
+
+#lightbox img {
+    max-width: 90vw;
+    max-height: 90vh;
+    border: 4px solid #fff;
+    border-radius: 0.5rem;
+    box-shadow: 0 4px 10px rgba(0,0,0,0.4);
+}
+
+#closeLightbox {
+    position: absolute;
+    top: 16px;
+    right: 16px;
+    background: #fff;
+    border-radius: 50%;
+    padding: 8px;
+    font-size: 18px;
+    font-weight: bold;
+    color: #000;
+    cursor: pointer;
+    border: none;
+    box-shadow: none;
+}
+
+.lessen-dropdown {
+    position: fixed;
+    top: 120px;
+    right: 12px;
+    width: 220px;
+    z-index: 9999;
+}
+
+.lessen-header {
+    width: 100%;
+    background: #CBAF96;
+    color: #000;
+    padding: 10px 12px;
+    border-radius: 6px;
+    border: none;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-weight: 500;
+    text-align: left;
+}
+
+.container {
+    position: relative;
+}
+
+.zoomable {
+    position: relative;
+}
+
+.grid-images img:nth-child(2) {
+    grid-column: span 2;
+}
+
+.triangle { transition: transform 0.2s ease; font-size: 14px; }
+.triangle.open { transform: rotate(180deg); }
+
+.lessen-list { display: none; background: #f5f5f5; border: 1px solid #ddd; margin-top: 8px; border-radius: 6px; overflow: hidden; width: 100%; }
+.lessen-list ul { margin: 0; padding: 0; list-style: none; }
+.lessen-list li a { display: block; padding: 10px 12px; text-decoration: none; color: #222; border-bottom: 1px solid #e6e6e6; }
+.lessen-list li a:last-child { border-bottom: none; }
+.lessen-list li a:hover { background: #e0e0e0; }
+
+.footer { text-align: center; padding: 20px; background-color: #f2f2f2; width: 100%; }
+.footer-link { color: #c65858; font-weight: 600; text-decoration: none; }
+.footer-link:hover { text-decoration: underline; }
+
+.description-text {
+    font-size: 1.3rem;
+    line-height: 1.6;
+}
+</style>
+</head>
+<body>
+
+<div class="background-dots">
+    <span class="dot1"></span>
+    <span class="dot2"></span>
+    <span class="dot3"></span>
+    <span class="dot4"></span>
+    <span class="dot5"></span>
+</div>
+
+<header>Les 12 - Afwerking</header>
+
+<main>
+<a href="index.html" class="back-home">⬅ Terug naar homepage</a>
+
+<div class="content-box">
+    <div class="lesson-number">les 12</div>
+    <div class="description-text"><strong>In deze fase heb ik verder gewerkt aan mijn Figma schermen en visual code.</strong></div>
+    <div class="text">In deze les heb ik feedback gevraagd over mijn visual code en mijn figma schermen. Bij mijn <b>figma schermen</b> was mijn <b>lettergrootte</b> nog niet helemaal in orde. Een ander element dat niet goed was in mijn figma schermen is dat ik nog niet had nagedacht over al de mogelijke scenario's. Bijvoorbeeld, ik had nog geen terug knoppen.</div>
+    </p>
+    <div class="text">In de les heb ik ook gevraagd of mijn <b>tailwind in orde</b> was, dit bleek in orde te zijn. De feedback die ik heb gekregen over mijn projectdocumentatie is dat de <b>visuele hierachie</b> van mijn homepage nog niet in orde is. De leerkracht raadde ook aan om bepaalde woorden van een tekst in een vet te zetten. Een ander element dat ik moest aanpassen is de <b>kleur van mijn tekstkader</b>. De kleur moest meer vermengen met de achtergrond.</div>
+    <div class="grid-images">
+    <img src="Images/13.1.mov" class="large zoomable" style="width: 2000%; max-width: 950px; height: 1000px;">
+    </div>
+</div>
+</main>
+
+<div id="lightbox">
+    <div>
+        <button id="closeLightbox">✕</button>
+        <img id="lightboxImage" src="">
+    </div>
+</div>
+
+<div id="lessen-dropdown" class="lessen-dropdown">
+    <button id="lessen-toggle" class="lessen-header">
+        <span id="triangle" class="triangle">▾</span>
+        <span class="title">Lessen</span>
+    </button>
+    <nav id="lessen-list" class="lessen-list">
+        <ul>
+            <li><a href="Week 1 & 2.html">Les 1 & 2</a></li>
+            <li><a href="Week 3.html">Les 3</a></li>
+            <li><a href="Week 4.html">Les 4</a></li>
+            <li><a href="Week 5.html">Les 5</a></li>
+            <li><a href="Week 6.html">Les 6</a></li>
+            <li><a href="Week 7 & 8.html">Les 7</a></li>
+            <li><a href="Week 9.html">Les 8</a></li>
+            <li><a href="Week 10.html">Les 9</a></li>
+            <li><a href="Week 11.html">Les 10</a></li>
+            <li><a href="Week 12.html">Les 11</a></li>
+        </ul>
+    </nav>
+</div>
+
+<script>
+const toggle = document.getElementById('lessen-toggle');
+const list = document.getElementById('lessen-list');
+const triangle = document.getElementById('triangle');
+
+toggle.addEventListener('click', () => {
+    list.style.display = list.style.display === 'block' ? 'none' : 'block';
+    triangle.classList.toggle('open');
+});
+document.addEventListener('click', (e) => {
+    const dropdown = document.getElementById('lessen-dropdown');
+    if (!dropdown.contains(e.target)) {
+        list.style.display = 'none';
+        triangle.classList.remove('open');
+    }
+});
+
+const images = document.querySelectorAll('.zoomable');
+const lightbox = document.getElementById('lightbox');
+const lightboxImage = document.getElementById('lightboxImage');
+const closeBtn = document.getElementById('closeLightbox');
+
+images.forEach(img => {
+    img.addEventListener('click', () => {
+        lightboxImage.src = img.src;
+        lightbox.style.display = 'flex';
+    });
+});
+
+closeBtn.addEventListener('click', () => {
+    lightbox.style.display = 'none';
+});
+
+lightbox.addEventListener('click', (e) => {
+    if (e.target === lightbox) {
+        lightbox.style.display = 'none';
+    }
+});
+</script>
+
+<footer class="footer">
+    <p>AP Hogeschool: Grafische en Digitale Media</p>
+    <p> Project: lost in tra(i)nslation - Julie Gevels - 1GDM1</p>
+    <p><a href="https://github.com/JulieGevels/2526_PRTT_GevelsJ_Projectdocumentatie.git" class="footer-link" target="_blank">GitHub Repository</a></p>
+</footer>
+
+</body>
+</html>
+
+
+
